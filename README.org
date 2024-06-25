@@ -1,0 +1,69 @@
+#+TITLE: Rust microbit guix template
+
+* What's that?
+- If you are a hipster like me, and you want to hack on your microbit
+  with Rust using a Guix machine, then you couldn't find better
+  place!! I prepared this repo especially for that case, so you can
+  hop straight to concrete!
+- If you ever use this, let me know. It took some time before I
+  figured out how to do this XD.
+
+* How to run?
+- To pull this repo, you can use =cargo generete=, like this:
+  #+begin_src sh
+    cargo generate --git {{this repo url}}
+  #+end_src
+
+- You need to have a rustup guix channel pulled:
+  #+begin_src scheme
+    ;; ~/.config/guix/channels.scm
+    (cons (channel
+           (name 'rustup)
+           (url "https://github.com/declantsien/guix-rustup")
+           (introduction
+            (make-channel-introduction
+             "325d3e2859d482c16da21eb07f2c6ff9c6c72a80"
+             (openpgp-fingerprint
+              "F695 F39E C625 E081 33B5  759F 0FC6 8703 75EF E2F5"))))
+          %default-channels)
+  #+end_src
+
+  #+begin_src sh
+    guix pull
+  #+end_src
+
+- Then simply run =./dev-shell.sh= and whole dev environment should be
+  working!
+
+- To compile and write program on microbit, you can run this command: =cargo embed=
+
+* Next
+- You can learn more here: [[https://docs.rust-embedded.org/discovery/microbit/index.html][Rust embedded discovery book]]
+
+* Extra
+- At the time I wrote this and everything was working fine, I was using these channels:
+  #+begin_src scheme
+    ;; ~/.config/guix/channels.scm
+    (list (channel
+           (name 'rustup)
+           (url "https://github.com/declantsien/guix-rustup")
+           (branch "master")
+           (commit
+            "190a3e434eea18135a9bb44a7bc61ca023d72dbe")
+           (introduction
+            (make-channel-introduction
+             "325d3e2859d482c16da21eb07f2c6ff9c6c72a80"
+             (openpgp-fingerprint
+              "F695 F39E C625 E081 33B5  759F 0FC6 8703 75EF E2F5"))))
+          (channel
+           (name 'guix)
+           (url "https://git.savannah.gnu.org/git/guix.git")
+           (branch "master")
+           (commit
+            "027a35dff89cbb35512afee4f4a78ae103a2f484")
+           (introduction
+            (make-channel-introduction
+             "9edb3f66fd807b096b48283debdcddccfea34bad"
+             (openpgp-fingerprint
+              "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA")))))
+  #+end_src
